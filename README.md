@@ -18,18 +18,16 @@ cd giphy-search
 yarn or npm i
 ```
 
-### 3. **Create `.env` File**:
-```
-yarn or npm i
-```
- ### 5. **Start the Development Server**:
+### 4. **Create `.env` File**:
+
+### 5. **Start the Development Server**:
  ```
  yarn dev  or npm run dev
  ```
 
 ###  **Steps for Collaborators**:
 - You should copy the `.env.example` file to `.env`.
-- Then, you must obtain you own Giphy API key (or any other required keys) and fill it in the `.env` file.
+- Then, you must obtain your own Giphy API key (or any other required keys) and fill it in the `.env` file.
 
 ###  **Why Use `.env.example`**:
 - **Security**: Sensitive keys are not committed to the repository.
