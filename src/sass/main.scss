@@ -1,0 +1,36 @@
+// src/scss/main.scss
+@import './themes/light';
+@import './themes/dark';
+
+body {
+  background-color: var(--primary-bg-color);
+  color: var(--text-color);
+  font-family: var(--font-family);
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: var(--secondary-color);
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+}
