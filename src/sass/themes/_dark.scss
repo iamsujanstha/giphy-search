@@ -1,17 +1,14 @@
 html[data-theme='dark'] {
-  --primary-bg-color: #1e1e2d;
-  --sidebar-bg-color: #232333;
+  --primary-bg-color: #2c2a2a;
   --text-color: #e0e0e0;
   --text-color-dark: #ffffff;
-  --hover-bg-color: #F3F4F8;
-  --hover-color: #23272E;
-  --accent-color: #bb86fc;
-  --table-border-color: #3e3e4e;
-  --status-pending-color: #ffb800;
-  --profit-positive-color: #28c76f;
-  --profit-negative-color: #ea5455;
-  --notification-badge-color: #ea5455;
+  --border-color: #e0e0e0;
   --icon-color: #f3f3f3;
+  --pink-color: #ff1d7b;
   --font-family: "Public Sans", sans-serif;
-  --sidebar-width: 260px
+  --searchbar-height: 68px;
+  --searchbar-width: 820px;
+  --searchbar-bg-color: #5a5a5a;
+  --close-bg-color: #2c2a2a;
+  --giphy-width: 860px
 }

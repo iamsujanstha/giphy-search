@@ -1,11 +1,14 @@
 
 import { useMemo, useState } from "react";
 import useFetch from "@/hooks/useFetch";
+import SearchInput from "@/components/search-input/SearchInput";
+import styles from './giphy.module.scss';
+import ToggleTheme from "@/components/toggle-theme/ToggleTheme";
 
 const Giphy = () => {
   const apiKey = import.meta.env.VITE_GIPHY_API_KEY;
   const BaseURL = import.meta.env.VITE_API_ENDPOINT_URL;
-  const [page, setPage] = useState(0);
+  const [page,] = useState(0);
   const limit = 10;
 
   const queryParams = useMemo(() => ({
@@ -15,34 +18,32 @@ const Giphy = () => {
   }), [apiKey, limit, page]);
 
   const { data, loading, error } = useFetch(BaseURL, queryParams);
+  console.log(loading, error, data)
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
+  const renderGifs = () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return data?.data?.map((ele: any) => {
+      return (
+        <div className={styles.images}>
+          <img src={ele.images.fixed_width.url} />
+        </div>
+      )
+    })
   }
 
   return (
-    <div>
-      <h1>Trending Gifs</h1>
-      {/* <ul>
-        {data?.data.map((gif: any) => (
-          <li key={gif.id}>
-            <img src={gif.images.fixed_height.url} alt={gif.title} />
-          </li>
-        ))}
-      </ul> */}
-      <div>
-        <button onClick={() => setPage((prev) => Math.max(prev - 1, 0))} disabled={page === 0}>
-          Previous
-        </button>
-        <button onClick={() => setPage((prev) => prev + 1)} disabled={data?.pagination?.total_count <= (page + 1) * limit}>
-          Next
-        </button>
-      </div>
+    <div className={styles.container}>
+      <form className={styles.form}>
+        <section>
+          <h1>GIFY SEARCH <span><ToggleTheme /></span></h1>
+          <SearchInput />
+        </section>
+      </form >
+      <section >
+        {renderGifs()}
+      </section>
     </div>
+
   );
 };
 

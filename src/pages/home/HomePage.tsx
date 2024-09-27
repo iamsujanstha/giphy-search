@@ -1,8 +1,11 @@
-import Giphy from '@/containers/giphy/Giphy'
+import Giphy from '@/containers/giphy/Giphy';
+import styles from './homepage.module.scss'
 
 const HomePage = () => {
   return (
-    <Giphy />
+    <div className={styles.home}>
+      <Giphy />
+    </div>
   )
 }
 

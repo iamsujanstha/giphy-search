@@ -14,7 +14,7 @@ const useFetch = (baseUrl: string, queryParams: Record<string, string | number> 
       Object.keys(queryParams).forEach((key) => url.searchParams.append(key, String(queryParams[key])));
 
       try {
-        const response = await fetch(url.toString());
+        const response = await fetch('https://api.giphy.com/v1/gifs/trending?rating=pg-13&offset=12&type=undefined&limit=12&api_key=L8eXbxrbPETZxlvgXN9kIEzQ55Df04v0&pingback_id=19232ddfb2b35e17');
         if (!response.ok) {
           throw new Error(`Error: ${response.statusText}`);
         }

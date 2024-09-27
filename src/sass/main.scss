@@ -2,13 +2,19 @@
 @import './themes/light';
 @import './themes/dark';
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
 body {
   background-color: var(--primary-bg-color);
   color: var(--text-color);
   font-family: var(--font-family);
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
 }
 
 button {
