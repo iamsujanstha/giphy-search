@@ -4,6 +4,7 @@
   height: 100%;
   margin: 2rem 0.5rem;
   background-color: var(--primary-bg-color);
+  width: var(--searchbar-width);
 
   .form {
     position: sticky;
@@ -17,15 +18,25 @@
       flex-direction: column;
       align-items: center;
       gap: 1rem;
+      margin-top: 1rem;
+
+      .title {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+      }
 
       h1 {
         font-size: 40px;
-        line-height: 40px;
         letter-spacing: 0.2rem;
         color: var(--text-color-dark);
 
-        @include small-screen {
+        @include sm-screen {
           font-size: 28px;
+        }
+
+        @include xs-screen {
+          font-size: 22px;
         }
 
         span {
@@ -44,15 +55,15 @@
       column-gap: 10px;
       margin-left: 4px;
 
-      @include large-screen {
+      @include lg-screen {
         columns: 3;
       }
 
-      @include medium-screen {
+      @include md-screen {
         columns: 3;
       }
 
-      @include small-screen {
+      @include sm-screen {
         columns: 2;
       }
 

@@ -1,16 +1,22 @@
-@mixin small-screen {
+@mixin xs-screen {
+  @media (max-width: 376px) {
+    @content;
+  }
+}
+
+@mixin sm-screen {
   @media (max-width: 576px) {
     @content;
   }
 }
 
-@mixin medium-screen {
+@mixin md-screen {
   @media (max-width: 768px) {
     @content;
   }
 }
 
-@mixin large-screen {
+@mixin lg-screen {
   @media (min: 768px) {
     @content;
   }

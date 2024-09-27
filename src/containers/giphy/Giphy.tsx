@@ -14,7 +14,7 @@ const Giphy = () => {
 
   const queryParams = useMemo(() => ({
     api_key: API_KEY,
-    q: searchValue, // Use searchValue in the query params
+    q: searchValue,
     limit,
     offset: page * limit,
   }), [API_KEY, limit, page, searchValue]);
@@ -45,7 +45,10 @@ const Giphy = () => {
     <div className={styles.container}>
       <form className={styles.form} onSubmit={handleSubmit}>
         <section>
-          <h1>GIFY SEARCH <span><ToggleTheme /></span></h1>
+          <div className={styles.title}>
+            <h1>GIPHY SEARCH </h1>
+            <ToggleTheme />
+          </div>
           <SearchInput value={searchValue} onChange={handleSearchChange} />
         </section>
       </form>

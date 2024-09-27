@@ -1,12 +1,20 @@
+@import '../../styles//mixins/responsive';
+
 .toggle {
   border: 0;
   width: 80px;
   height: 30px;
   border-radius: 20px;
-  transform: translate(-10%, -20%);
+  transform: translate(-20%, 28%);
+  margin-right: -12px;
   cursor: pointer;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   position: relative;
+
+  @include sm-screen {
+    transform: translate(-20%, 10%);
+    height: 26px;
+  }
 
   .btn {
     width: 26px;
@@ -16,6 +24,11 @@
     position: absolute;
     top: 1.5px;
     left: 0;
+
+    @include sm-screen {
+      height: 22px;
+      width: 22px;
+    }
 
     &:focus {
       outline: none;
