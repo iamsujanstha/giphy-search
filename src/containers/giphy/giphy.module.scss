@@ -1,15 +1,16 @@
 @import '../../styles/mixins/responsive';
 
 .container {
-  height: 100vh;
-  margin: 2rem 1rem;
+  height: 100%;
+  margin: 2rem 0.5rem;
   background-color: var(--primary-bg-color);
-  border: 2px solid red;
-
 
   .form {
     position: sticky;
-    top: 10px;
+    top: 0;
+    background-color: var(--primary-bg-color);
+    z-index: 10;
+    overflow: hidden;
 
     section {
       display: flex;
@@ -22,24 +23,37 @@
         line-height: 40px;
         letter-spacing: 0.2rem;
         color: var(--text-color-dark);
+
+        @include small-screen {
+          font-size: 28px;
+        }
+
+        span {
+          margin-left: 3rem;
+          margin-top: 10px;
+        }
       }
     }
   }
 
   section {
     &:nth-child(2) {
-      width: 100%;
+      width: 99%;
       margin: 20px auto;
       columns: 4;
       column-gap: 10px;
       margin-left: 4px;
 
-      @include small-screen {
-        columns: 2;
+      @include large-screen {
+        columns: 3;
       }
 
       @include medium-screen {
         columns: 3;
+      }
+
+      @include small-screen {
+        columns: 2;
       }
 
       .images {

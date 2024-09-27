@@ -1,4 +1,4 @@
-# Giphy Search App
+# GIPHY Search App
 
 ## Setup Instructions
 
