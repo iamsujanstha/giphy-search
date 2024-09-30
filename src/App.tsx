@@ -1,12 +1,13 @@
+import { BrowserRouter } from 'react-router-dom'
 import './sass/main.scss'
 import HomePage from '@/pages/home/HomePage'
 
 function App() {
   return (
     <>
-      <div>
+      <BrowserRouter>
         <HomePage />
-      </div>
+      </BrowserRouter>
     </>
   )
 }
