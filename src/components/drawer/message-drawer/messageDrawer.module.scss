@@ -1,0 +1,19 @@
+.msgDrawer {
+  width: 100%;
+  transition: all 0.3s ease-in-out;
+  height: 60px;
+  transform: translateY(-100%);
+  position: absolute;
+  background-color: red;
+  z-index: 10;
+  position: absolute;
+  display: block;
+  // top: 10px;
+  // right: 0;
+  top: 0;
+
+  .is-open {
+    transform: translatY(0);
+    display: block;
+  }
+}

@@ -47,71 +47,110 @@
     }
   }
 
-  section {
-    &:nth-child(2) {
-      width: 99%;
-      margin: 20px auto;
-      columns: 4;
-      column-gap: 10px;
-      margin-left: 4px;
+  .gifListContainer {
+    width: 99%;
+    margin: 20px auto;
+    height: 100vh;
+    // overflow-y: auto;
+    columns: 4;
+    column-gap: 10px;
+    margin-left: 4px;
 
-      @include lg-screen {
-        columns: 3;
-      }
+    @include lg-screen {
+      columns: 3;
+    }
 
-      @include md-screen {
-        columns: 3;
-      }
+    @include md-screen {
+      columns: 3;
+    }
 
-      @include sm-screen {
-        columns: 2;
-      }
+    @include sm-screen {
+      columns: 2;
+    }
 
-      .images {
-        width: 100%;
-        margin-bottom: 10px;
-        break-inside: avoid;
+    .images {
+      width: 100%;
+      margin-bottom: 10px;
+      break-inside: avoid;
+
+
+
+      .img {
+        position: relative;
 
         img {
           width: 100%;
           border-radius: 6px;
+          cursor: pointer;
+        }
+
+        .icons {
+          display: flex;
+          gap: 4px;
+          position: absolute;
+          right: 10px;
+          top: 6px;
+          cursor: pointer;
+          background: linear-gradient(rgba(0, 0, 0, 0), rgba(18, 18, 18, 0.1));
+          padding: 2px 4px;
+          border-radius: 4px;
+          opacity: 0;
+
+          &:hover {
+            opacity: 1;
+          }
+
+          span {
+            >svg {
+              // Assuming you're using SVG icons
+              transition: transform 0.2s; // Smooth transition
+            }
+
+            // Individual hover effect for icons
+            >svg:hover {
+              transform: scale(1.1); // Scale on hover
+            }
+          }
         }
       }
     }
   }
 
-  .pagination {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 5rem;
-    font-size: 1.2rem;
-    gap: 5px;
+  .observerTarget {
+    height: 10px;
+  }
+}
 
-    .pageLink {
-      padding: 8px 15px;
-      cursor: pointer;
-      border-radius: 4px;
-      font-weight: 400;
+.pagination {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5rem;
+  font-size: 1.2rem;
+  gap: 5px;
 
-      &.active {
-        background-color: blue;
-        color: white;
-      }
+  .pageLink {
+    padding: 8px 15px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: 400;
 
-      &:hover {
-        background-color: blue;
-        color: white;
-      }
-
-
-    }
-
-    .active {
+    &.active {
       background-color: blue;
       color: white;
     }
+
+    &:hover {
+      background-color: blue;
+      color: white;
+    }
+
+
   }
 
+  .active {
+    background-color: blue;
+    color: white;
+  }
 }

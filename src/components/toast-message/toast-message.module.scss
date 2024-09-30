@@ -1,0 +1,30 @@
+.toast {
+  min-width: 400px;
+  width: fit-content;
+  max-width: 600px;
+  height: fit-content;
+  word-wrap: break-word;
+  padding: 1.4rem 1.2rem;
+  background-color: white;
+  border-radius: 12px;
+  color: black;
+  position: relative;
+  top: 20px;
+  right: 0;
+  bottom: 0;
+
+  .close {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    font-size: 20px;
+    cursor: pointer;
+
+    svg {
+      height: 26px;
+      width: 26px;
+    }
+
+    // display: none;
+  }
+}
