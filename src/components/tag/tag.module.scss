@@ -1,0 +1,24 @@
+.tag {
+  display: inline-flex;
+  padding: 0px 16px;
+  background-color: rgb(46, 46, 46);
+  border-radius: 20px;
+  line-height: 38px;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  overflow: visible;
+  animation-name: eNfGyh;
+  animation-duration: 1s;
+
+  h1 {
+    margin: 0px;
+    white-space: nowrap;
+    font-size: 15px;
+    font-weight: 400;
+    text-transform: lowercase;
+    font-style: italic;
+    letter-spacing: 0.04em;
+    -webkit-font-smoothing: antialiased;
+  }
+}

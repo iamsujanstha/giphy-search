@@ -6,7 +6,6 @@ import SearchInput from "@/components/search-input/SearchInput";
 import styles from './giphy.module.scss';
 import ToggleTheme from "@/components/toggle-theme/ToggleTheme";
 import Loader from "@/components/loader/Loader";
-import ToastMessage from "@/components/toast-message/ToastMessage";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Icons } from "@/utils/iconConfig";
 import { copyToClipboard } from "@/utils/copyToClipboard";
@@ -24,7 +23,7 @@ const Giphy = () => {
   const [hasMore, setHasMore] = useState(true);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [drawerContent, setDrawerContent] = useState('');
-  /* Add favourite on client side */
+  /* Added favourite on client side */
   const [favourite, setFavourite] = useState<string[]>([]);
   const navigate = useNavigate();
 
@@ -42,7 +41,6 @@ const Giphy = () => {
     const params = new URLSearchParams(location.search);
     const query = params.get('query');
     if (query) {
-      console.log('trigger', query);
       setPage(0);
       setSearchValue(decodeURIComponent(query));
     } else {
@@ -51,11 +49,19 @@ const Giphy = () => {
   }, [location.search]);
 
   useEffect(() => {
-    if (data?.data) {
-      setGifs(prevGifs => (page === 0 ? data.data : [...prevGifs, ...data.data]));
-      setHasMore(gifs.length < data.pagination.total_count);
+    if (data && page === 0) {
+      setGifs(data.data);
+    } else if (data && gifs.length <= data.pagination.total_count) {
+      setGifs(prevGifs => {
+        const newGifs = data.data.filter((newGif: any) =>
+          !prevGifs.some(prevGif => prevGif.id === newGif.id)
+        );
+        return [...prevGifs, ...newGifs];
+      });
+
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    setHasMore(gifs.length < data?.pagination?.total_count);
   }, [data, page]);
 
   const handleSearchChange = useCallback((value: string) => {
@@ -67,7 +73,7 @@ const Giphy = () => {
 
   // Curried function to handle copy action
   const handleCopy = (url: string) => async (e: React.MouseEvent) => {
-    e.preventDefault()
+    e.stopPropagation()
     const success = await copyToClipboard(url);
     if (success) {
       setDrawerContent("Link copied to Clipboard.");
@@ -81,7 +87,7 @@ const Giphy = () => {
   };
 
   const handleFavorite = (id: string) => (e: React.MouseEvent) => {
-    e.preventDefault()
+    e.stopPropagation();
     setFavourite((prev) =>
       prev.includes(id) ? prev.filter(favId => favId !== id) : [...prev, id]
     );
@@ -96,7 +102,11 @@ const Giphy = () => {
 
   const renderGifs = () => {
     return gifs.map((ele: any, index: number) => (
-      <div className={styles.images} key={`${ele.id}-${index}`} onClick={() => navigate(`/gifs/${ele.slug}`, { state: { gifData: ele } })}>
+      <div
+        className={styles.images}
+        key={`${ele.id}-${index}`}
+        onClick={() => navigate(`/gifs/${ele.slug}`, { state: { gifData: ele } })}
+      >
         <div className={styles.img}>
           <img src={ele.images.fixed_width.url} alt={ele.title} />
           <span className={styles.icons}>
@@ -139,15 +149,15 @@ const Giphy = () => {
           dataLength={gifs.length}
           next={fetchMoreGifs}
           hasMore={hasMore}
-          loader={<Loader />}
-          endMessage={'No More Gifs'}
+          loader={<p></p>}
+          endMessage={<p className={styles.endMessage}>No More Gifs</p>}
           className={styles.infiniteScroll}
         >
           {renderGifs()}
-          {error && <ToastMessage message={error} open={Boolean(error)} />}
+          {error && <p>Fetch data Error</p>}
         </InfiniteScroll>
       </section>
-
+      {loading && <Loader />}
       {isDrawerOpen && (
         <MessageDrawer isOpen={isDrawerOpen} content={drawerContent} />
       )}

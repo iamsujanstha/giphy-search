@@ -1,7 +1,10 @@
+import styles from './tag.module.scss'
 
-const Tag = () => {
+const Tag = ({ name }: { name: string }) => {
   return (
-    <div>Tag</div>
+    <a className={styles.tag}>
+      <h1>#{name}</h1>
+    </a>
   )
 }
 
