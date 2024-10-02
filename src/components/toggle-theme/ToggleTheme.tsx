@@ -6,7 +6,7 @@ import styles from './toggleTheme.module.scss'
 const THEME_KEY = import.meta.env.VITE_THEME_SECRET_KEY;
 
 const ToggleTheme = () => {
-  const [theme, setTheme] = useSecureStorage('theme', 'light', THEME_KEY);
+  const [theme, setTheme] = useSecureStorage('theme', 'dark', THEME_KEY);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);

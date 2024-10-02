@@ -1,14 +1,10 @@
-import { BrowserRouter } from 'react-router-dom'
+import { RouterProvider } from 'react-router-dom'
 import './sass/main.scss'
-import HomePage from '@/pages/home/HomePage'
+import router from '@/routes/app-routes'
 
 function App() {
   return (
-    <>
-      <BrowserRouter>
-        <HomePage />
-      </BrowserRouter>
-    </>
+    <RouterProvider router={router} />
   )
 }
 

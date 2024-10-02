@@ -51,12 +51,12 @@ const SearchInput: React.FC<SearchInputProps> = ({ value, onChange, onKeyDown })
       />
       {searchTerm && (
         <span className={styles.close} onClick={handleClose}>
-          <Icons.CloseIcon size="20" color="white" />
+          <Icons.closeIcon size="20" color="white" />
         </span>
       )}
       <div className={styles.iconContainer} onClick={handleSearch}>
         <span className={styles.icon}>
-          <Icons.SearchIcon size="34" color="white" />
+          <Icons.searchIcon size="34" color="white" />
         </span>
       </div>
     </div>

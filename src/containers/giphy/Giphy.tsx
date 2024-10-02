@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useMemo, useState, useCallback, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useFetch from "@/hooks/useFetch";
 import SearchInput from "@/components/search-input/SearchInput";
 import styles from './giphy.module.scss';
@@ -22,6 +22,11 @@ const Giphy = () => {
   const [searchValue, setSearchValue] = useState('');
   const [gifs, setGifs] = useState<any[]>([]);
   const [hasMore, setHasMore] = useState(true);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [drawerContent, setDrawerContent] = useState('');
+  /* Add favourite on client side */
+  const [favourite, setFavourite] = useState<string[]>([]);
+  const navigate = useNavigate();
 
   const queryParams = useMemo(() => ({
     api_key: API_KEY,
@@ -61,14 +66,27 @@ const Giphy = () => {
   }, []);
 
   // Curried function to handle copy action
-  const handleCopy = (url: string) => {
-    return async () => {
-      const success = await copyToClipboard(url);
-      if (success) {
-        <MessageDrawer isOpen content="Link copied to Clipboard" />
-      }
+  const handleCopy = (url: string) => async (e: React.MouseEvent) => {
+    e.preventDefault()
+    const success = await copyToClipboard(url);
+    if (success) {
+      setDrawerContent("Link copied to Clipboard.");
+      setIsDrawerOpen(true);
+
+      // Close the drawer after 4 seconds
+      setTimeout(() => {
+        setIsDrawerOpen(false);
+      }, 4000);
     }
   };
+
+  const handleFavorite = (id: string) => (e: React.MouseEvent) => {
+    e.preventDefault()
+    setFavourite((prev) =>
+      prev.includes(id) ? prev.filter(favId => favId !== id) : [...prev, id]
+    );
+  };
+
 
   const fetchMoreGifs = () => {
     if (!loading && hasMore) {
@@ -78,12 +96,23 @@ const Giphy = () => {
 
   const renderGifs = () => {
     return gifs.map((ele: any, index: number) => (
-      <div className={styles.images} key={`${ele.id}-${index}`} >
+      <div className={styles.images} key={`${ele.id}-${index}`} onClick={() => navigate(`/gifs/${ele.slug}`, { state: { gifData: ele } })}>
         <div className={styles.img}>
           <img src={ele.images.fixed_width.url} alt={ele.title} />
           <span className={styles.icons}>
-            <span><Icons.favouriteIcon size="24" /></span>
-            <span onClick={handleCopy(ele.images.fixed_width.url)} ><Icons.linkIcon size="20" onClick={() => copyToClipboard(ele.images.fixed_width.url)} /></span>
+            <span onClick={handleFavorite(ele.id)}>
+              <Icons.favouriteIcon
+                size="20"
+                color={favourite.find((id) => id === ele.id) ? 'red' : ''}
+              />
+            </span>
+            <span onClick={handleCopy(ele?.images?.fixed_width.url)}>
+              <Icons.linkIcon size="20" />
+            </span>
+          </span>
+          <span className={styles.userDetail}>
+            <img src={ele?.user?.avatar_url} alt={ele?.user?.name} />
+            <p>{ele?.user?.display_name} <span>{ele?.user?.is_verified && <Icons.verifiedIcon size="14" />}</span></p>
           </span>
         </div>
       </div>
@@ -107,17 +136,21 @@ const Giphy = () => {
       </form>
       <section className={styles.gifListContainer}>
         <InfiniteScroll
-          dataLength={gifs.length} // This is important field to render the next data
+          dataLength={gifs.length}
           next={fetchMoreGifs}
           hasMore={hasMore}
           loader={<Loader />}
-          style={{ width: 'var(--searchbar-width)', columns: '4', overflow: 'hidden' }}
           endMessage={'No More Gifs'}
+          className={styles.infiniteScroll}
         >
           {renderGifs()}
           {error && <ToastMessage message={error} open={Boolean(error)} />}
         </InfiniteScroll>
       </section>
+
+      {isDrawerOpen && (
+        <MessageDrawer isOpen={isDrawerOpen} content={drawerContent} />
+      )}
     </div>
   );
 };

@@ -3,7 +3,8 @@ import { IconType } from 'react-icons';
 import { GoSearch } from "react-icons/go";
 import { IoIosClose } from "react-icons/io";
 import { LuLink } from "react-icons/lu";
-import { CiHeart } from "react-icons/ci";
+import { BsHeartFill } from "react-icons/bs";
+import { MdVerified } from "react-icons/md";
 
 
 interface IconProps {
@@ -19,8 +20,9 @@ const createIcon = (IconComponent: IconType): React.FC<IconProps> => {
 };
 
 export const Icons = {
-  SearchIcon: createIcon(GoSearch),
-  CloseIcon: createIcon(IoIosClose),
+  searchIcon: createIcon(GoSearch),
+  closeIcon: createIcon(IoIosClose),
   linkIcon: createIcon(LuLink),
-  favouriteIcon: createIcon(CiHeart)
+  favouriteIcon: createIcon(BsHeartFill),
+  verifiedIcon: createIcon(MdVerified)
 };

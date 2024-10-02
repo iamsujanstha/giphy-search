@@ -16,7 +16,7 @@ const ToastMessage = ({ message, open }: IToastMessage) => {
   return (
     <div className={styles.toast} style={{ display: showTaost ? 'block' : 'none' }}>
       {message}
-      <span className={styles.close} onClick={handleClose}><Icons.CloseIcon /></span>
+      <span className={styles.close} onClick={handleClose}><Icons.closeIcon /></span>
     </div>
   )
 }

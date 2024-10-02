@@ -16,6 +16,7 @@
     background-color: var(--searchbar-bg-color);
     padding-left: 18px;
     word-wrap: break-word;
+    z-index: 100;
 
     @include sm-screen {
       font-size: 14px;
