@@ -1,0 +1,22 @@
+.msgDrawer {
+  width: 100%;
+  height: 40px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  font-size: medium;
+  font-weight: 800;
+  text-align: center;
+  align-content: center;
+  background: rgb(2, 0, 36);
+  background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(103, 135, 243, 1) 0%, rgba(132, 19, 230, 1) 0%, rgba(186, 59, 236, 1) 10%, rgba(198, 18, 229, 1) 29%, rgba(125, 16, 226, 1) 77%, rgba(136, 80, 227, 1) 82%, rgba(203, 45, 186, 1) 90%, rgba(49, 71, 206, 1) 100%, rgba(0, 212, 255, 1) 100%);
+  opacity: 0;
+  z-index: 100;
+  transform: translateY(-100%);
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+
+  &.isOpen {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
