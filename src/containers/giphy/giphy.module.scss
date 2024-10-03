@@ -50,7 +50,7 @@
   .gifListContainer {
     width: 99%;
     margin: 20px auto;
-    column-gap: 10px;
+    column-gap: 6px;
     margin-left: 4px;
 
     .infiniteScroll {
@@ -76,10 +76,28 @@
       width: 100%;
       margin-bottom: 6px;
       break-inside: avoid;
-      width: 250;
 
       .img {
         position: relative;
+
+        .loadingCard {
+          width: 520px;
+          height: 380px;
+          background: linear-gradient(90deg, #9933ff 25%, #b366ff 50%, #9933ff 75%);
+          background-size: 200% 100%;
+          animation: shimmer 1.5s infinite;
+          border-radius: 8px;
+
+          @keyframes shimmer {
+            0% {
+              background-position: 200% 0;
+            }
+
+            100% {
+              background-position: -200% 0;
+            }
+          }
+        }
 
         img {
           width: 100%;

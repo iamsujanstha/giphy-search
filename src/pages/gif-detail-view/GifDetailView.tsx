@@ -15,6 +15,7 @@ const GifDetailView = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [favourite, setFavourite] = useState<string[]>([]);
   const [isShare, setShare] = useState(false);
+  const [isLoading, setLoading] = useState(true);
 
   const { isDrawerOpen, drawerContent, openDrawer } = useDrawer();
 
@@ -71,7 +72,7 @@ const GifDetailView = () => {
     return <p>No GIF data available.</p>;
   }
 
-  const visibleTags = isExpanded ? gifData?.tags : gifData?.tags.slice(0, 5);
+  const visibleTags = isExpanded ? gifData?.tags : gifData?.tags?.slice(0, 5);
   const gifUrl = gifData.images.fixed_width.url;
   const gifTitle = gifData.title;
 
@@ -90,10 +91,16 @@ const GifDetailView = () => {
 
       <div className={styles.gifDetail}>
         <div className={styles.imgContainer}>
+          {isLoading && <div className={styles.loadingCard}></div>}
           <picture>
             <source srcSet={gifData.images.fixed_width.webp} type="image/webp" />
-            <source srcSet={gifData.images.fixed_width.url} type="image/jpeg" />
-            <img src={gifData.images.fixed_width.url} alt={gifData.title} />
+            <source srcSet={gifUrl} type="image/jpeg" />
+            <img
+              src={gifUrl}
+              alt={gifData.title}
+              onLoad={() => setLoading(false)}
+              style={{ display: isLoading ? 'none' : 'block' }}
+            />
           </picture>
           <span className={styles.iconContainer}>
             <span onClick={handleFavorite(gifData.id)}>
@@ -136,16 +143,18 @@ const GifDetailView = () => {
             </div>
           )}
         </div>
-        <div className={styles.tags}>
-          {visibleTags?.map((tag: any) => (
-            <Tag name={tag} key={tag} />
-          ))}
-          {!isExpanded && (
-            <span className={styles.moreTag} onClick={toggleExpand}>
-              <h1>...</h1>
-            </span>
-          )}
-        </div>
+        {gifData?.tags?.length &&
+          <div className={styles.tags}>
+            {visibleTags?.map((tag: any) => (
+              <Tag name={tag} key={tag} />
+            ))}
+            {!isExpanded && (
+              <span className={styles.moreTag} onClick={toggleExpand}>
+                <h1>...</h1>
+              </span>
+            )}
+          </div>
+        }
       </div>
       {isDrawerOpen && <MessageDrawer isOpen={isDrawerOpen} content={drawerContent} />}
     </div>

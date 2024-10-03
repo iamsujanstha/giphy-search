@@ -12,7 +12,6 @@ import { copyToClipboard } from "@/utils/copyToClipboard";
 import MessageDrawer from "@/components/drawer/message-drawer/MessageDrawer";
 import useDrawer from "@/hooks/useTopDrawer";
 
-
 const Giphy = () => {
   const API_KEY = import.meta.env.VITE_GIPHY_API_KEY;
   const BaseURL = import.meta.env.VITE_API_ENDPOINT_URL;
@@ -22,15 +21,15 @@ const Giphy = () => {
   const [searchValue, setSearchValue] = useState('');
   const [gifs, setGifs] = useState<any[]>([]);
   const [hasMore, setHasMore] = useState(true);
-  /* Added favourite on client side */
   const [favourite, setFavourite] = useState<string[]>([]);
+  const [loadingImages, setLoadingImages] = useState<{ [key: string]: boolean }>({});
 
   const { isDrawerOpen, drawerContent, openDrawer } = useDrawer();
   const navigate = useNavigate();
 
   const queryParams = useMemo(() => ({
     api_key: API_KEY,
-    q: searchValue ?? '',
+    q: searchValue || 'trending',
     limit,
     offset: page * limit,
   }), [API_KEY, limit, page, searchValue]);
@@ -70,7 +69,6 @@ const Giphy = () => {
     setHasMore(true);
   }, []);
 
-  // Curried function to handle copy action
   const handleCopy = (url: string) => async (e: React.MouseEvent) => {
     e.stopPropagation();
     const success = await copyToClipboard(url);
@@ -85,7 +83,6 @@ const Giphy = () => {
       prev.includes(id) ? prev.filter(favId => favId !== id) : [...prev, id]
     );
   };
-
 
   const fetchMoreGifs = () => {
     if (!loading && hasMore) {
@@ -104,8 +101,16 @@ const Giphy = () => {
           <picture>
             <source srcSet={ele.images.fixed_width.webp} type="image/webp" />
             <source srcSet={ele.images.fixed_width.url} type="image/jpeg" />
-            <img src={ele.images.fixed_width.url} alt={ele.title} />
+            <img
+              src={ele.images.fixed_width.url}
+              alt={ele.title}
+              onLoad={() => setLoadingImages(prev => ({ ...prev, [ele.id]: false }))}
+              onError={() => setLoadingImages(prev => ({ ...prev, [ele.id]: false }))}
+              style={{ display: loadingImages[ele.id] ? 'none' : 'block' }}
+              onLoadStart={() => setLoadingImages(prev => ({ ...prev, [ele.id]: true }))}
+            />
           </picture>
+          {loadingImages[ele.id] && <div className={styles.loadingCard}></div>}
           <span className={styles.icons}>
             <span onClick={handleFavorite(ele.id)}>
               <Icons.favouriteIcon
@@ -155,6 +160,7 @@ const Giphy = () => {
         </InfiniteScroll>
       </section>
       {loading && <Loader />}
+      {!data?.data.length && !loading && <p>No Data Found.</p>}
       {isDrawerOpen && (
         <MessageDrawer isOpen={isDrawerOpen} content={drawerContent} />
       )}

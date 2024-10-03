@@ -25,6 +25,27 @@
       margin-bottom: 2rem;
       position: relative;
 
+      /* gifDeailView.module.scss */
+
+      .loadingCard {
+        width: 520px;
+        height: 380px;
+        background: linear-gradient(90deg, #9933ff 25%, #b366ff 50%, #9933ff 75%);
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite;
+        border-radius: 8px;
+
+        @keyframes shimmer {
+          0% {
+            background-position: 200% 0;
+          }
+
+          100% {
+            background-position: -200% 0;
+          }
+        }
+      }
+
       img {
         width: 520px !important;
       }
