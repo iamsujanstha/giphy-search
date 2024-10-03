@@ -1,32 +1,27 @@
 import { useState } from 'react';
-import CryptoJS from 'crypto-js';
 
-/* used CryptJS to encrypt localStorage key value pair to secure */
-const useSecureStorage = (key: string, initialValue: string, secretKey: string) => {
+const useSecureStorage = (key: string, initialValue: string) => {
   const getStoredValue = () => {
-    const encryptedData = localStorage.getItem(btoa(key));
-    if (!encryptedData) return initialValue;
+    const encodedData = localStorage.getItem(btoa(key));
+    if (!encodedData) return initialValue;
 
     try {
-      const decryptedData = CryptoJS.AES.decrypt(encryptedData, secretKey).toString(CryptoJS.enc.Utf8);
-      return JSON.parse(decryptedData);
+      return JSON.parse(atob(encodedData));
     } catch (error) {
-      console.error('Failed to decrypt data:', error);
-      return initialValue;
+      console.error('Failed to parse stored value:', error);
+      return initialValue; // Return initial value if parsing fails
     }
   };
 
-  const [storedValue, setStoredValue] = useState(getStoredValue);
+  const [storedValue, setStoredValue] = useState<string>(getStoredValue);
 
-  // eslint-disable-next-line no-unused-vars
-  const setValue = (value: string | ((value: string) => string)) => {
+  const setValue = (value: string | ((prevValue: string) => string)) => {
+    const valueToStore = typeof value === 'function' ? value(storedValue) : value;
     try {
-      const valueToStore = value instanceof Function ? value(storedValue) : value;
-      const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(valueToStore), secretKey).toString();
-      localStorage.setItem(btoa(key), encryptedData);
+      localStorage.setItem(btoa(key), btoa(JSON.stringify(valueToStore)));
       setStoredValue(valueToStore);
     } catch (error) {
-      console.error('Failed to encrypt and store data:', error);
+      console.error('Failed to store value:', error);
     }
   };
 

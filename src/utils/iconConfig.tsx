@@ -6,7 +6,10 @@ import { LuLink } from "react-icons/lu";
 import { BsHeartFill } from "react-icons/bs";
 import { MdVerified } from "react-icons/md";
 import { FaShareAlt } from "react-icons/fa";
-
+import { FaFacebookSquare } from "react-icons/fa";
+import { FaPinterestSquare } from "react-icons/fa";
+import { FaSquareXTwitter } from "react-icons/fa6";
+import { FaSquareReddit } from "react-icons/fa6";
 
 interface IconProps {
   size?: string;
@@ -26,5 +29,12 @@ export const Icons = {
   linkIcon: createIcon(LuLink),
   favouriteIcon: createIcon(BsHeartFill),
   verifiedIcon: createIcon(MdVerified),
-  shareIcon: createIcon(FaShareAlt)
+  shareIcon: createIcon(FaShareAlt),
+  socialIcons: {
+    fbIcon: createIcon(FaFacebookSquare),
+    pinterestIcon: createIcon(FaPinterestSquare),
+    twitterIcon: createIcon(FaSquareXTwitter),
+    redditIcon: createIcon(FaSquareReddit)
+  }
+
 };

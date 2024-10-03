@@ -10,6 +10,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { Icons } from "@/utils/iconConfig";
 import { copyToClipboard } from "@/utils/copyToClipboard";
 import MessageDrawer from "@/components/drawer/message-drawer/MessageDrawer";
+import useDrawer from "@/hooks/useTopDrawer";
 
 
 const Giphy = () => {
@@ -21,10 +22,10 @@ const Giphy = () => {
   const [searchValue, setSearchValue] = useState('');
   const [gifs, setGifs] = useState<any[]>([]);
   const [hasMore, setHasMore] = useState(true);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [drawerContent, setDrawerContent] = useState('');
   /* Added favourite on client side */
   const [favourite, setFavourite] = useState<string[]>([]);
+
+  const { isDrawerOpen, drawerContent, openDrawer } = useDrawer();
   const navigate = useNavigate();
 
   const queryParams = useMemo(() => ({
@@ -58,9 +59,7 @@ const Giphy = () => {
         );
         return [...prevGifs, ...newGifs];
       });
-
     }
-
     setHasMore(gifs.length < data?.pagination?.total_count);
   }, [data, page]);
 
@@ -73,16 +72,10 @@ const Giphy = () => {
 
   // Curried function to handle copy action
   const handleCopy = (url: string) => async (e: React.MouseEvent) => {
-    e.stopPropagation()
+    e.stopPropagation();
     const success = await copyToClipboard(url);
     if (success) {
-      setDrawerContent("Link copied to Clipboard.");
-      setIsDrawerOpen(true);
-
-      // Close the drawer after 4 seconds
-      setTimeout(() => {
-        setIsDrawerOpen(false);
-      }, 4000);
+      openDrawer("Link copied to Clipboard.");
     }
   };
 
@@ -108,7 +101,11 @@ const Giphy = () => {
         onClick={() => navigate(`/gifs/${ele.slug}`, { state: { gifData: ele } })}
       >
         <div className={styles.img}>
-          <img src={ele.images.fixed_width.url} alt={ele.title} />
+          <picture>
+            <source srcSet={ele.images.fixed_width.webp} type="image/webp" />
+            <source srcSet={ele.images.fixed_width.url} type="image/jpeg" />
+            <img src={ele.images.fixed_width.url} alt={ele.title} />
+          </picture>
           <span className={styles.icons}>
             <span onClick={handleFavorite(ele.id)}>
               <Icons.favouriteIcon
@@ -150,7 +147,7 @@ const Giphy = () => {
           next={fetchMoreGifs}
           hasMore={hasMore}
           loader={<p></p>}
-          endMessage={<p className={styles.endMessage}>No More Gifs</p>}
+          endMessage={<p className={styles.endMessage}></p>}
           className={styles.infiniteScroll}
         >
           {renderGifs()}

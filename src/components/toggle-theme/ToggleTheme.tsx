@@ -1,12 +1,9 @@
-import { useEffect } from 'react'
+import { useEffect } from 'react';
 import useSecureStorage from '@/hooks/useSecureStorage';
-import styles from './toggleTheme.module.scss'
-
-
-const THEME_KEY = import.meta.env.VITE_THEME_SECRET_KEY;
+import styles from './toggleTheme.module.scss';
 
 const ToggleTheme = () => {
-  const [theme, setTheme] = useSecureStorage('theme', 'dark', THEME_KEY);
+  const [theme, setTheme] = useSecureStorage('theme', 'dark');
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -30,7 +27,7 @@ const ToggleTheme = () => {
         }}
       />
     </button>
-  )
-}
+  );
+};
 
-export default ToggleTheme
+export default ToggleTheme;

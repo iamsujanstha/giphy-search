@@ -31,6 +31,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ value, onChange, onKeyDown })
   };
 
   const handleSearch = (e: React.MouseEvent<HTMLDivElement>) => {
+    onChange(searchTerm)
     e.stopPropagation();
     if (value.trim()) {
       const encodedQuery = encodeURIComponent(value);
