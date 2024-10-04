@@ -10,6 +10,7 @@ import { FaFacebookSquare } from "react-icons/fa";
 import { FaPinterestSquare } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
 import { FaSquareReddit } from "react-icons/fa6";
+import { BsArrowUpCircleFill } from "react-icons/bs";
 
 interface IconProps {
   size?: string;
@@ -35,6 +36,7 @@ export const Icons = {
     pinterestIcon: createIcon(FaPinterestSquare),
     twitterIcon: createIcon(FaSquareXTwitter),
     redditIcon: createIcon(FaSquareReddit)
-  }
+  },
+  scrollTopIcon: createIcon(BsArrowUpCircleFill)
 
 };
