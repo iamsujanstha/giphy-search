@@ -25,14 +25,14 @@
     }
 
     .imgContainer {
+      columns: 1;
       display: flex;
-      justify-content: start;
-      gap: 2rem;
-      margin-bottom: 2rem;
-      position: relative;
+      align-items: center;
+      justify-content: center;
+      gap: 3rem;
+      position: absolute;
 
       @include sm-screen {
-        width: 400px;
         flex-direction: column;
         justify-content: center;
         align-items: center;
@@ -65,6 +65,11 @@
         @include sm-screen {
           width: 380px !important;
         }
+
+        @include md-screen {
+          width: 400px !important;
+          padding-left: 20px;
+        }
       }
 
       .overlay {
@@ -73,11 +78,19 @@
         width: 520px;
         height: 380px;
         position: absolute;
-        border-radius: 12px;
+        border-radius: 6px;
+        left: 0;
 
         @include sm-screen {
           width: 380px;
           top: 0;
+          left: 0;
+        }
+
+        @include md-screen {
+          width: 380px;
+          top: 0;
+          margin-left: 20px;
         }
 
         h3 {

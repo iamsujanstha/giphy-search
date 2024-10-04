@@ -102,12 +102,13 @@ const Giphy = () => {
             <source srcSet={ele.images.fixed_width.webp} type="image/webp" />
             <source srcSet={ele.images.fixed_width.url} type="image/jpeg" />
             <img
-              src={ele.images.fixed_width.url}
+              src={ele.images.fixed_width.webP}
               alt={ele.title}
               onLoad={() => setLoadingImages(prev => ({ ...prev, [ele.id]: false }))}
               onError={() => setLoadingImages(prev => ({ ...prev, [ele.id]: false }))}
               style={{ display: loadingImages[ele.id] ? 'none' : 'block' }}
               onLoadStart={() => setLoadingImages(prev => ({ ...prev, [ele.id]: true }))}
+              loading="lazy"
             />
           </picture>
           {loadingImages[ele.id] && <div className={styles.loadingCard}></div>}
@@ -123,7 +124,7 @@ const Giphy = () => {
             </span>
           </span>
           <span className={styles.userDetail}>
-            <img src={ele?.user?.avatar_url} alt={ele?.user?.name} />
+            <img src={ele?.user?.avatar_url} alt={ele?.user?.name} loading="lazy" />
             <p>{ele?.user?.display_name} <span>{ele?.user?.is_verified && <Icons.verifiedIcon size="14" />}</span></p>
           </span>
         </div>
