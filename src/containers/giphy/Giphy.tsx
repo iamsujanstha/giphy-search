@@ -1,3 +1,4 @@
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useMemo, useState, useCallback, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -11,6 +12,7 @@ import { Icons } from "@/utils/iconConfig";
 import { copyToClipboard } from "@/utils/copyToClipboard";
 import MessageDrawer from "@/components/drawer/message-drawer/MessageDrawer";
 import useDrawer from "@/hooks/useTopDrawer";
+import ScrollToTop from "@/components/scroll-to-top/ScrollToTop";
 
 const Giphy = () => {
   const API_KEY = import.meta.env.VITE_GIPHY_API_KEY;
@@ -107,7 +109,7 @@ const Giphy = () => {
               onLoad={() => setLoadingImages(prev => ({ ...prev, [ele.id]: false }))}
               onError={() => setLoadingImages(prev => ({ ...prev, [ele.id]: false }))}
               style={{ display: loadingImages[ele.id] ? 'none' : 'block' }}
-              onLoadStart={() => setLoadingImages(prev => ({ ...prev, [ele.id]: true }))}
+              // onLoadStart={() => setLoadingImages(prev => ({ ...prev, [ele.id]: true }))}
               loading="lazy"
             />
           </picture>
@@ -165,6 +167,7 @@ const Giphy = () => {
       {isDrawerOpen && (
         <MessageDrawer isOpen={isDrawerOpen} content={drawerContent} />
       )}
+      <ScrollToTop />
     </div>
   );
 };
