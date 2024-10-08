@@ -1,0 +1,6 @@
+@import '../func//calculate-rem';
+
+@mixin fontSize($size) {
+  font-size: $size;
+  font-size: calculate-rem($size);
+}

@@ -1,7 +1,8 @@
 @import '../../styles/mixins/responsive';
+@import '../../styles/mixins/size';
 
 .container {
-  height: 100vh;
+  min-height: 100vh;
   margin: 1rem 0.5rem;
   background-color: var(--primary-bg-color);
   width: var(--searchbar-width);
@@ -27,7 +28,7 @@
       }
 
       h1 {
-        font-size: 40px;
+        @include fontSize(50px);
         letter-spacing: 0.2rem;
         color: var(--text-color-dark);
 
@@ -131,7 +132,6 @@
             >svg {
               transition: transform 0.2s;
             }
-
 
             >svg:hover {
               transform: scale(1.1);
