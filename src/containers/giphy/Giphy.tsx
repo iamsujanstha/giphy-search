@@ -24,7 +24,6 @@ const Giphy = () => {
   const [gifs, setGifs] = useState<any[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [favourite, setFavourite] = useState<string[]>([]);
-  const [loadingImages, setLoadingImages] = useState<{ [key: string]: boolean }>({});
 
   const { isDrawerOpen, drawerContent, openDrawer } = useDrawer();
   const navigate = useNavigate();
@@ -106,14 +105,9 @@ const Giphy = () => {
             <img
               src={ele.images.fixed_width.webP}
               alt={ele.title}
-              onLoad={() => setLoadingImages(prev => ({ ...prev, [ele.id]: false }))}
-              onError={() => setLoadingImages(prev => ({ ...prev, [ele.id]: false }))}
-              style={{ display: loadingImages[ele.id] ? 'none' : 'block' }}
-              // onLoadStart={() => setLoadingImages(prev => ({ ...prev, [ele.id]: true }))}
               loading="lazy"
             />
           </picture>
-          {loadingImages[ele.id] && <div className={styles.loadingCard}></div>}
           <span className={styles.icons}>
             <span onClick={handleFavorite(ele.id)}>
               <Icons.favouriteIcon
