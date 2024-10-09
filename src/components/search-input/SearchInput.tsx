@@ -1,8 +1,10 @@
 import { Icons } from '@/utils/iconConfig';
 import styles from './searchInput.module.scss';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import useDebounce from '@/hooks/useDebounce';
+import { useMemo, useState } from 'react';
+// import useDebounce from '@/hooks/useDebounce';
+import { INPUT_SUGGESTION } from '@/components/suggestion-list/keywords';
+import SuggestionList from '@/components/suggestion-list/SuggestionList';
 
 interface SearchInputProps {
   value: string;
@@ -14,11 +16,11 @@ const SearchInput: React.FC<SearchInputProps> = ({ value, onChange, onKeyDown })
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState(value);
 
-  const debouncedSearchTerm = useDebounce(searchTerm, 500);
+  // const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
-  useEffect(() => {
-    onChange(debouncedSearchTerm);
-  }, [debouncedSearchTerm, onChange]);
+  // useEffect(() => {
+  //   onChange(debouncedSearchTerm);
+  // }, [debouncedSearchTerm, onChange]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
@@ -41,25 +43,37 @@ const SearchInput: React.FC<SearchInputProps> = ({ value, onChange, onKeyDown })
     }
   };
 
+  const suggestedList = useMemo(() => {
+    return INPUT_SUGGESTION.filter((word) => word.toLowerCase().includes(searchTerm.toLowerCase()));
+  }, [searchTerm])
+
   return (
     <div className={styles.search}>
-      <input
-        type="text"
-        placeholder="Search all the GIFs"
-        value={searchTerm}
-        onChange={handleChange}
-        onKeyDown={onKeyDown}
-      />
-      {searchTerm && (
-        <span className={styles.close} onClick={handleClose}>
-          <Icons.closeIcon size="20" color="white" />
-        </span>
-      )}
-      <div className={styles.iconContainer} onClick={handleSearch}>
-        <span className={styles.icon}>
-          <Icons.searchIcon size="34" color="white" />
-        </span>
+      <div>
+        <input
+          type="text"
+          placeholder="Search all the GIFs"
+          value={searchTerm}
+          onChange={handleChange}
+          onKeyDown={onKeyDown}
+        />
+        {searchTerm && (
+          <span className={styles.close} onClick={handleClose}>
+            <Icons.closeIcon size="20" color="white" />
+          </span>
+        )}
+        <div className={styles.iconContainer} onClick={handleSearch}>
+          <span className={styles.icon}>
+            <Icons.searchIcon size="34" color="white" />
+          </span>
+        </div>
       </div>
+      {suggestedList.length && Boolean(searchTerm) ?
+        <SuggestionList
+          suggestions={suggestedList}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+        /> : ''}
     </div>
   );
 };

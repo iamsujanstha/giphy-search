@@ -1,0 +1,27 @@
+.suggestion {
+  position: absolute;
+  background-color: white;
+  width: 100%;
+  padding: 8px;
+  height: fit-content;
+  border-radius: 4px;
+
+  ul {
+    li {
+      list-style: none;
+      font-style: italic;
+      font-weight: 800;
+      cursor: pointer;
+      padding: 12px;
+
+      &:hover {
+        background-color: rgb(231, 226, 226);
+        border-radius: 4px;
+      }
+
+      &:last-child {
+        margin-bottom: 8px;
+      }
+    }
+  }
+}

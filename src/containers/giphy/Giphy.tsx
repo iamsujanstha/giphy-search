@@ -153,11 +153,11 @@ const Giphy = () => {
           className={styles.infiniteScroll}
         >
           {renderGifs()}
-          {error && <p>Fetch data Error</p>}
         </InfiniteScroll>
       </section>
       {loading && <Loader />}
-      {!data?.data.length && !loading && <p>No Data Found.</p>}
+      {error && <p>Fetch data Error</p>}
+      {data?.data.length === 0 && !loading && <p>No Data Found.</p>}
       {isDrawerOpen && (
         <MessageDrawer isOpen={isDrawerOpen} content={drawerContent} />
       )}
